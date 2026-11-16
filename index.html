@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#ecebe6"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Brick Wall">
+<title>Another Brick in the Wall</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#ecebe6;--sf:#ecebe6;--tx:#111;--mu:#4b4a46;--bd:#111;--p0:#ff4fa3;--p1:#19c3b1;--p2:#ffb000;--p3:#b29bff}
+:root[data-theme="dark"]{--bg:#1b1a19;--sf:#1b1a19;--tx:#f1efe9;--mu:#a9a69e;--bd:#f1efe9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1a19;--sf:#1b1a19;--tx:#f1efe9;--mu:#a9a69e;--bd:#f1efe9}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 "Avenir Next","Trebuchet MS",system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:12px}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+h1{font-size:1.35rem;margin:0;letter-spacing:-.01em}
+select,button{font:inherit;color:var(--tx);background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;min-height:44px}
+button{cursor:pointer}button:disabled{opacity:.4;cursor:default}
+button.go{background:var(--tx);color:var(--bg);border-color:var(--tx);font-weight:600}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.chip{border:2px solid var(--bd);border-radius:20px;padding:4px 12px;background:var(--sf);font-size:.9rem}
+.chip.on{border-color:var(--c);box-shadow:0 0 0 2px var(--c)}
+.chip i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:6px}
+.wrap{display:grid;grid-template-columns:18px 1fr;gap:4px}
+.ax{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.7rem;color:var(--mu);text-align:center;display:flex;justify-content:space-between}
+.heads,.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.heads{margin-bottom:3px}
+.heads span{font-size:clamp(.38rem,1.2vw,.62rem);text-align:center;color:var(--mu);overflow:hidden;text-overflow:ellipsis}
+.grid{touch-action:none;user-select:none;-webkit-user-select:none}
+.c{aspect-ratio:1;border-radius:5px;background:var(--sf);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(.48rem,1.6vw,.7rem);line-height:1.1;padding:2px;overflow:hidden;hyphens:auto;overflow-wrap:anywhere}
+.c.v{background:transparent;border-color:transparent}
+.c.sel{box-shadow:inset 0 0 0 3px var(--tx)}
+.c.bad{box-shadow:inset 0 0 0 3px #d93025}
+.hint{font-size:.78rem;color:var(--mu);margin:6px 0 0}
+#panel{margin-top:12px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px}
+#panel p{margin:0 0 10px}.mu{color:var(--mu);font-size:.85rem}
+.qt{font-size:1.1rem;font-weight:600}
+.opts{display:grid;gap:8px;margin-bottom:10px}.opts button{text-align:left}
+.msg{font-weight:600}
+a{color:var(--tx)}
+label{font-size:.8rem;color:var(--mu);display:block;margin-top:10px}
+body{font:14px/1.45 "Space Mono",ui-monospace,monospace}
+h1{font:400 clamp(2.2rem,8vw,3.6rem)/.9 Anton,Impact,sans-serif;text-transform:uppercase;text-shadow:3px 3px 0 var(--p0)}
+select,button{border:2px solid var(--tx);border-radius:0;font-weight:700;background:var(--sf)}
+button.go{background:var(--tx);color:var(--bg)}
+.chip{border:2px solid var(--tx);border-radius:0}
+.chip.on{background:var(--c);color:#111;box-shadow:none;border-color:var(--tx)}
+.chip.on i{background:#111}
+.c{border:2px solid var(--bd);border-radius:0;align-items:flex-end;justify-content:flex-start;text-align:left;padding:3px;font:700 clamp(.42rem,1.5vw,.64rem)/1.05 "Space Mono",ui-monospace,monospace;background:linear-gradient(var(--sf),var(--sf)) 0 100%/100% 40% no-repeat,var(--h,var(--sf))}
+.c[data-s="1"]{--h:radial-gradient(circle,var(--o) 20%,transparent 22%) 0 0/9px 9px}
+.c[data-s="2"]{--h:radial-gradient(circle,var(--o) 34%,transparent 36%) 0 0/9px 9px}
+.c[data-s="3"]{--h:radial-gradient(circle,var(--o) 48%,transparent 50%) 0 0/9px 9px}
+.c[data-s="4"]{--h:radial-gradient(circle,var(--o) 62%,transparent 64%) 0 0/9px 9px}
+.c[data-s="5"]{--h:var(--o)}
+#panel{border:3px solid var(--tx);border-radius:0;background:var(--sf)}
+.qt{font:400 1.35rem/1.15 Anton,Impact,sans-serif;letter-spacing:.3px}
+.heads span{font-weight:700}
+#panel{border-color:var(--pc,var(--tx));box-shadow:6px 6px 0 var(--pc,transparent)}
+.c{position:relative}.c::after{content:attr(data-p);position:absolute;top:2px;right:2px;padding:0 2px;background:var(--sf);color:var(--tx);font-size:.45rem;line-height:1.2;letter-spacing:1px}
+.c:not([data-p])::after,.c[data-p=""]::after{display:none}
+#clock{font:400 1.3rem Anton,Impact,sans-serif;letter-spacing:.5px;margin:-4px 0 8px}
+main{padding-bottom:190px}
+#panel{margin:0;position:fixed;z-index:20;box-sizing:border-box}
+#panel.bar{left:0;right:0;bottom:0;border-width:3px 0 0;box-shadow:none;max-height:42vh;overflow:auto;padding:10px 14px}
+#panel.modal{left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,92vw);max-height:88vh;overflow:auto}
+#bd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:15}
+.tb{height:8px;border:2px solid var(--tx);margin:6px 0 10px}.tb i{display:block;height:100%;background:var(--pc,var(--tx));width:100%}
+</style></head><body><main>
+<header><h1>Another Brick in the Wall</h1>
+<div>
+<button id="new">New game</button> <button id="load">Load questions</button><input type="file" id="ldf" accept=".json,application/json" hidden></div></header>
+<div class="chips" id="chips"></div>
+<div id="clock"></div>
+<div class="wrap"><div class="ax"><span>Obscure</span><span>Popular</span></div>
+<div><div class="heads" id="heads"></div><div class="grid" id="grid"></div></div></div>
+<p class="hint">Drag across the grid to draw a rectangle. Paler squares are easier to flip; deeper colour is more secure.</p>
+<div id="bd"></div><div id="panel"></div>
+<label><input type="checkbox" id="dbg"> Show correct answer (testing only)</label>
+<p class="hint" id="bn"></p>
+</main>
+<script>
+const G=['Metal','Rock','Folk','Pop','Soul/Disco','Reggae/Ska','Hip-Hop','Electronic','Jazz','Classical'],R=8,C=10;
+const S=[['Nu metal','Heavy metal','Thrash metal','Death metal',null,'Black metal',null,'Drone doom'],
+['Classic rock','Alternative rock',null,'Punk','Psychedelic rock','Post-punk','Krautrock','Zeuhl'],
+['Country',null,'Singer-songwriter',null,'Americana','Rockabilly','Bluegrass','Free folk'],
+[null,'Teen pop','K-pop','Electro-pop','Baroque pop','Shibuya-kei',null,null],
+['Disco','Motown','Soul',null,'Funk',null,null,'Northern soul'],
+['Reggae','Dancehall','Ska punk','Two-tone','Roots reggae','Ska','Rocksteady','Dub'],
+[null,'Rap','Trap','G-funk','Crunk','Boom bap','Conscious hip-hop','Abstract hip-hop'],
+['House','Techno','Drum and bass',null,'Ambient','IDM',null,'Power electronics'],
+['Smooth jazz',null,'Cool jazz',null,'Bebop','Hard bop','Free jazz','Spiritual jazz'],
+[null,'Romantic','Baroque','Opera',null,'Minimalism','Musique concrète','Twelve-tone serialism']];
+// [sub-genre, level, question, answer, distractors, optional Spotify search]. Unverified: check before wider use.
+const BANK=[
+['Nu metal',1,'Which band recorded “Break Stuff”?','Limp Bizkit',['Korn','Staind','Papa Roach'],'Break Stuff'],
+['Nu metal',2,'In which year did Korn release “Follow the Leader”?','1998',['1994','1996','2000','2002']],
+['Heavy metal',1,'Which band recorded “Paranoid”?','Black Sabbath',['Deep Purple','Judas Priest','Motörhead'],'Paranoid'],
+['Heavy metal',2,'Which Judas Priest album includes “Breaking the Law”?','British Steel',['Screaming for Vengeance','Sad Wings of Destiny','Painkiller'],'Breaking the Law'],
+['Thrash metal',1,'Which band released “Master of Puppets”?','Metallica',['Slayer','Megadeth','Anthrax']],
+['Thrash metal',2,'In which year did Slayer release “Reign in Blood”?','1986',['1984','1988','1990','1982']],
+['Black metal',3,'Which label issued the original 1994 release of Mayhem’s “De Mysteriis Dom Sathanas”?','Deathlike Silence Productions',['Century Media','Nuclear Blast','Peaceville','Candlelight']],
+['Classic rock',1,'Which band recorded “Stairway to Heaven”?','Led Zeppelin',['Deep Purple','Pink Floyd','The Who'],'Stairway to Heaven'],
+['Alternative rock',3,'Which producer worked with Nirvana on “Nevermind”?','Butch Vig',['Steve Albini','Rick Rubin','Brendan O’Brien','Jack Endino','Scott Litt']],
+['Alternative rock',4,'Who recorded Nirvana’s “In Utero” in 1993?','Steve Albini',['Butch Vig','Andy Wallace','Jack Endino','Rick Rubin','Scott Litt']],
+['Punk',1,'Which band recorded “Anarchy in the U.K.”?','Sex Pistols',['The Clash','Ramones','The Damned'],'Anarchy in the U.K.'],
+['Post-punk',3,'Which label released Joy Division’s “Unknown Pleasures”?','Factory Records',['Rough Trade','4AD','Mute','Creation']],
+['Krautrock',1,'Which band released “Ege Bamyasi”?','Can',['Neu!','Faust','Amon Düül II']],
+['Motown',1,'Which singer recorded “What’s Going On”?','Marvin Gaye',['Stevie Wonder','Smokey Robinson','Diana Ross'],'What’s Going On'],
+['Teen pop',1,'Which singer recorded “…Baby One More Time”?','Britney Spears',['Christina Aguilera','Mandy Moore','Jessica Simpson'],'Baby One More Time'],
+['Boom bap',1,'Which group recorded “Can I Kick It?”','A Tribe Called Quest',['De La Soul','Wu-Tang Clan','Gang Starr'],'Can I Kick It'],
+['Baroque',1,'Which composer wrote “The Four Seasons”?','Antonio Vivaldi',['J.S. Bach','Handel','Telemann']],
+['Romantic',1,'Which composer wrote the Symphony No. 9 “From the New World”?','Antonín Dvořák',['Johannes Brahms','Tchaikovsky','Gustav Mahler']],
+['Minimalism',1,'Which composer wrote “Music for 18 Musicians”?','Steve Reich',['Philip Glass','John Adams','Terry Riley']],
+['Twelve-tone serialism',1,'Which composer developed the twelve-tone technique?','Arnold Schoenberg',['Anton Webern','Alban Berg','Igor Stravinsky','Pierre Boulez']],
+['Bebop',1,'Which saxophonist, nicknamed “Bird”, helped pioneer bebop?','Charlie Parker',['John Coltrane','Sonny Rollins','Stan Getz']],
+['Free jazz',2,'In which year did Ornette Coleman release “The Shape of Jazz to Come”?','1959',['1955','1957','1961','1963']],
+['Spiritual jazz',2,'Which John Coltrane album includes the suite “Acknowledgement”?','A Love Supreme',['Giant Steps','Ascension','Blue Train','My Favorite Things']],
+['Techno',1,'Which Detroit artist, as Rhythim Is Rhythim, made “Strings of Life”?','Derrick May',['Juan Atkins','Kevin Saunderson','Jeff Mills'],'Strings of Life'],
+['Ambient',1,'Which artist released “Music for Airports” in 1978?','Brian Eno',['Harold Budd','Aphex Twin','Steve Roach']],
+['Singer-songwriter',2,'In which year did Joni Mitchell release “Blue”?','1971',['1969','1973','1975','1968']],
+['Bluegrass',1,'Which musician is known as the “Father of Bluegrass”?','Bill Monroe',['Earl Scruggs','Lester Flatt','Ralph Stanley']],
+];
+const NM=['Pink','Aqua','Amber','Violet'];
+const TIER=['','Famous artist or song','Artist, decade or era','Album or year','Mid-tier artist','Label or producer','Album details','Deep-cut artist or exact year','Engineer or studio','Mid-tier credits','Deep-cut credits'];
+const VERB=['','Which artist recorded','On which album did we first hear','Which label released','Which producer worked on','Which sound engineer worked on'];
+const NOUN=['','Artist','Album','Label','Producer','Engineer'];
+const $=id=>document.getElementById(id);
+let np=2,board,turn,sel,q,over,drag,anchor,n=0,used=new Set(),setupOn=false,timeUp=false,gameEnd=null,glen=0;
+
+function newGame(){timeUp=false;gameEnd=glen?Date.now()+glen*60000:null;board=Array.from({length:R},(_,r)=>Array.from({length:C},(_,c)=>({o:null,s:0,v:!S[c][r]})));
+ turn=0;sel=null;q=null;over=false;drag=false;used=new Set();paint();panel()}
+
+const cells=s=>{const a=[];for(let r=s.r0;r<=s.r1;r++)for(let c=s.c0;c<=s.c1;c++)a.push([r,c]);return a};
+function info(s){const cs=cells(s),k=cs.length,t=k<=1?1:k<=2?2:k<=4?3:k<=6?4:k<=9?5:6;let m=0;
+ cs.forEach(([r,c])=>{const b=board[r][c];if(b.o!==null&&b.o!==turn)m=Math.max(m,b.s)});
+ return{k,m,ok:cs.every(([r,c])=>!board[r][c].v),lv:Math.min(10,t+m)}}
+const norm=(a,b)=>({r0:Math.min(a[0],b[0]),r1:Math.max(a[0],b[0]),c0:Math.min(a[1],b[1]),c1:Math.max(a[1],b[1])});
+
+function paint(){
+ const g=$('grid');
+ if(!g.children.length){$('heads').innerHTML=G.map(x=>`<span>${x}</span>`).join('');
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const d=document.createElement('div');d.className='c'+(board[r][c].v?' v':'');d.textContent=S[c][r]||'';d.dataset.r=r;d.dataset.c=c;g.appendChild(d)}}
+ const inSel=(r,c)=>sel&&r>=sel.r0&&r<=sel.r1&&c>=sel.c0&&c<=sel.c1,bad=sel&&!info(sel).ok;
+ [...g.children].forEach(d=>{const r=+d.dataset.r,c=+d.dataset.c,b=board[r][c];
+  d.style.setProperty('--o',b.o===null?'':`var(--p${b.o})`);d.dataset.s=b.o===null?0:b.s;d.dataset.p=b.o===null?'':'▪'.repeat(b.s);
+  
+  d.classList.toggle('sel',!!inSel(r,c));d.classList.toggle('bad',!!(bad&&inSel(r,c)))});
+ const cnt=Array(np).fill(0);board.flat().forEach(b=>{if(b.o!==null)cnt[b.o]++});
+ $('chips').innerHTML=cnt.map((k,i)=>`<span class="chip ${i===(q&&!q.done?q.who:turn)&&!over?'on':''}" style="--c:var(--p${i})"><i></i>${NM[i]} ${k}</span>`).join('');
+}
+
+function panel(){
+ const P=$('panel'),dbg=$('dbg').checked;P.style.setProperty('--pc',over?'var(--tx)':`var(--p${q?q.who:turn})`);
+ const modal=setupOn||over||q;P.className=modal?'modal':'bar';$('bd').style.display=modal?'block':'none';
+ if(setupOn){P.innerHTML=`<p class="qt">Another Brick in the Wall</p><p class="mu">Claim the board one rectangle at a time. Most squares when the clock runs out wins.</p><p><label style="margin:0">Players <select id="np"><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label></p><p><label style="margin:0">Game length <select id="gl"><option value="5">5 minutes</option><option value="10" selected>10 minutes</option><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="0">No limit</option></select></label></p><p class="mu">Each question has 30 seconds.</p><button class="go" data-a="go">Start</button>`;return}
+ if(over){const cnt=Array(np).fill(0);board.flat().forEach(b=>{if(!b.v&&b.o!==null)cnt[b.o]++});const m=Math.max(...cnt);
+  const w=cnt.map((k,i)=>k===m?NM[i]:null).filter(Boolean);
+  P.innerHTML=`${q&&q.msg?`<p class="msg">${q.msg}</p>`:''}<p class="qt">Game over. ${w.length>1?'Tie between '+w.join(' and '):w[0]+' wins'} with ${m} squares.</p><button class="go" data-a="new">Play again</button>`;return}
+ if(!q){
+  if(!sel){P.innerHTML=`<p><b>${NM[turn]}</b>, your turn. Draw a rectangle to claim or flip squares.</p>`;return}
+  const i=info(sel);if(!i.ok){P.innerHTML='<p>That rectangle includes empty space. Only rectangles made entirely of squares are valid.</p>';return}
+  P.innerHTML=`<p><b>${NM[turn]}</b> · ${i.k} square${i.k>1?'s':''} · difficulty <b>${i.lv}/10</b>: ${TIER[i.lv]}${i.m?` <span class="mu">(+${i.m} for enemy security)</span>`:''}</p>${i.k<=8?`<p class="mu">${cells(sel).map(([r,c])=>S[c][r]).join(', ')}</p>`:''}<button class="go" data-a="ask">Confirm and ask</button> <button data-a="clr">Clear</button>`;return}
+ P.innerHTML=`<p class="mu"><b style="background:var(--p${q.who});color:#111;padding:2px 8px">${NM[q.who]}</b>${q.done?'':q.stage==='steal'?' is stealing':' to answer'} · difficulty ${q.lv}/10 · ${S[q.col][q.row]}${q.done?'':' · <b id="qtime"></b>'}</p>${q.done?'':'<div class="tb"><i id="qbar"></i></div>'}
+ <p class="qt">${q.text}</p>
+ <div class="opts">${q.opts.map((o,i)=>`<button data-a="o" data-i="${i}" ${q.wrong.has(i)||q.done?'disabled':''}>${dbg&&i===q.ans?'✓ ':''}${o}</button>`).join('')}</div>
+ ${q.song?`<p><a target="_blank" rel="noopener" href="https://open.spotify.com/search/${encodeURIComponent(q.song)}">Find this song on Spotify</a></p>`:''}
+ ${q.msg?`<p class="msg">${q.msg}</p>`:''}${q.done?'<button class="go" data-a="cont">Back to the grid</button>':''}`;
+}
+
+function ask(){
+ const i=info(sel),cs=cells(sel),[r,c]=cs[Math.floor(Math.random()*cs.length)];
+ const k=i.lv<4?4:i.lv<7?5:6,sg=S[c][r],pf=l=>BANK.reduce((a,x,j)=>(x[0]===sg&&x[1]===l&&!used.has(j)&&a.push(j),a),[]);
+ let pool=[];for(const d of [0,-1,1,-2,2]){pool=pf(i.lv+d);if(pool.length)break}
+ const bi=pool[Math.floor(Math.random()*pool.length)],b=BANK[bi];n++;
+ let text,opts,ans,song=null;
+ if(b){used.add(bi);text=b[2];opts=[b[3],...b[4].slice(0,k-1)].sort(()=>Math.random()-.5);ans=opts.indexOf(b[3]);song=b[5]||null}
+ else{ans=Math.floor(Math.random()*k);text=`${VERB[Math.ceil(i.lv/2)]} “Sample Track ${n}”? (placeholder: no unused ${TIER[i.lv].toLowerCase()} question left for ${sg})`;opts=Array.from({length:k},(_,j)=>`${NOUN[Math.ceil(i.lv/2)]} ${'ABCDEF'[j]}`)}
+ q={rect:sel,lv:i.lv,who:turn,stage:'main',wrong:new Set(),done:false,msg:'',row:r,col:c,ans,text,opts,song,dl:Date.now()+30000};
+ panel()}
+
+function answer(i){
+ if(i===q.ans){cells(q.rect).forEach(([r,c])=>{const b=board[r][c];
+   if(b.o===q.who)b.s=Math.min(5,b.s+1);else{b.o=q.who;b.s=1}});
+  q.done=true;q.msg=`Correct. ${NM[q.who]} takes the rectangle.`;endTurn()}
+ else{q.wrong.add(i);
+  if(q.stage==='main'){q.stage='steal';q.who=(turn+1)%np;q.dl=Date.now()+30000;q.msg=`${i<0?'Time’s up.':'Wrong.'} ${NM[q.who]} can steal this question.`;paint()}
+  else{q.done=true;q.msg=i<0?'Time’s up. No change to the board.':'Wrong again. No change to the board.';endTurn()}}
+ panel()}
+
+function endTurn(){over=timeUp||board.flat().every(b=>b.v||b.o!==null);turn=(turn+1)%np;if(!over)q.msg+=` ${NM[turn]}, you’re up next.`;paint()}
+
+$('panel').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+ if(a==='ask')ask();else if(a==='o')answer(+b.dataset.i);else if(a==='new')setup();else if(a==='go')start();else if(a==='cont'){q=null;sel=null;paint();panel()}else if(a==='clr'){sel=null;paint();panel()}};
+$('new').onclick=setup;$('dbg').onchange=panel;
+
+const g=$('grid'),at=e=>{const d=document.elementFromPoint(e.clientX,e.clientY)?.closest('.c');return d?[+d.dataset.r,+d.dataset.c]:null};
+g.addEventListener('pointerdown',e=>{if(setupOn||over||q)return;const p=at(e);if(!p||board[p[0]][p[1]].v)return;
+ anchor=p;drag=true;sel=norm(p,p);g.setPointerCapture(e.pointerId);q=null;paint();panel()});
+g.addEventListener('pointermove',e=>{if(!drag)return;const p=at(e);if(!p)return;sel=norm(anchor,p);paint();panel()});
+g.addEventListener('pointerup',()=>{drag=false});
+g.addEventListener('pointercancel',()=>{drag=false});
+const BASE=BANK.length,ALL=new Set(S.flat());
+function addBank(a){BANK.length=BASE;used=new Set([...used].filter(j=>j<BASE));let k=0;
+ if(Array.isArray(a))a.forEach(x=>{if(Array.isArray(x)&&x.length>=5&&ALL.has(x[0])&&x[1]>=1&&x[1]<=5&&Array.isArray(x[4])){BANK.push(x);k++}});
+ $('bn').textContent=`${k} questions loaded. ${BANK.length} in the bank.`;return k}
+$('load').onclick=()=>$('ldf').click();
+$('ldf').onchange=async e=>{const f=e.target.files[0];if(!f)return;
+ try{const t=await f.text();addBank(JSON.parse(t))}catch(_){$('bn').textContent='Could not read that file.'}};
+fetch('questions.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{addBank(JSON.parse(t));try{localStorage.setItem('gg-bank',t)}catch(_){}}).catch(()=>{try{const t=localStorage.getItem('gg-bank');if(t)addBank(JSON.parse(t))}catch(_){}});
+function setup(){setupOn=true;panel()}
+function start(){np=+$('np').value;glen=+$('gl').value;setupOn=false;newGame()}
+function tick(){if(setupOn)return;const now=Date.now(),c=$('clock');
+ if(gameEnd&&!over){const l=Math.max(0,gameEnd-now);
+  c.textContent=timeUp?'Final question':`Time left ${Math.floor(l/60000)}:${String(Math.floor(l/1000)%60).padStart(2,'0')}`;
+  if(!l&&!timeUp){timeUp=true;if(!q||q.done){over=true;paint();panel()}}}
+ else if(!gameEnd)c.textContent='';
+ if(q&&!q.done){const l=Math.max(0,q.dl-now),t=$('qtime'),b=$('qbar');if(t)t.textContent=Math.ceil(l/1000)+'s';if(b)b.style.width=l/300+'%';if(!l)answer(-1)}}
+newGame();setup();setInterval(tick,250);
+</script><script>if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js')</script></body></html>
